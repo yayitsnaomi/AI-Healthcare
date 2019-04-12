@@ -55,7 +55,7 @@
     
     
 0.  **Theme1.epic1.story0** (2pts) - PLANNED: sprint 1
-1.  **Theme1.epic1.story1** (1pts) - PLANNED: sprint 1
+1.  **Theme1.epic1.story1** (2pts) - PLANNED: sprint 1
 2.  **Theme1.epic1.story2** (1pts) - PLANNED: sprint 1
 3.  **Theme1.epic1.story3** (2pts) - PLANNED: sprint 1
 4.  **Theme1.epic1.story4** (4pts) - PLANNED: sprint 1
@@ -64,10 +64,11 @@
 7.  **Theme1.epic1.story7** (4pts)
 8.  **Theme1.epic1.story8** (4pts)
 9.  **Theme1.epic1.story9** (4pts)
-10. **Theme1.epic1.story10** (8pts)
-11. **Theme1.epic1.story11** (2pts)
+10. **Theme1.epic1.story10** (4pts)
+11. **Theme1.epic1.story11** (4pts)
 12. **Theme1.epic1.story12** (4pts)
 13. **Theme1.epic1.story13**  (2pts)
+
 14. **Theme1.epic2.story1**  (2pts)
 16. **Theme1.epic2.story2**  (2pts)
 17. **Theme1.epic2.story3**  (4pts)
