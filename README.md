@@ -16,15 +16,6 @@
     -   number of users that use this app instead of googling their symptoms.
     -   number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
 
-## Backlog
-
-**Sprint Sizing Legend:**
--   0 points - quick chore
--   1 point ~ 1 hour (small)
--   2 points ~ 1/2 day (medium)
--   4 points ~ 1 day (large)
--   8 points - big and needs to be broken down more when it comes to execution (okay as placeholder for future work though)
-    
 ## Planning
 
 ### Theme 1: Create an AI doctor that can suggest the most likely disease based on your list of symptoms. 
@@ -55,6 +46,14 @@
 
 ## Backlog
 
+**Sprint Sizing Legend:**
+-   0 points - quick chore
+-   1 point ~ 1 hour (small)
+-   2 points ~ 1/2 day (medium)
+-   4 points ~ 1 day (large)
+-   8 points - big and needs to be broken down more when it comes to execution (okay as placeholder for future work though)
+    
+    
 0.  **Theme1.epic1.story0** (2pts) - PLANNED: sprint 1
 1.  **Theme1.epic1.story1** (1pts) - PLANNED: sprint 1
 2.  **Theme1.epic1.story2** (1pts) - PLANNED: sprint 1
