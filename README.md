@@ -3,7 +3,7 @@
 
 ## Project Charter
 
-**Vision**: Provide individuals across the world with access to affordable, quality healthcare. Doctors are limited and AI applications in healthcare are advancing to enable quality care via internet access.
+**Vision**: Provide individuals across the world with access to affordable, quality healthcare. Doctors are limited and AI applications in healthcare are advancing to enable quality care via AIs and internet access.
 
 **Mission**: As individuals are moving towards personalized Healthcare, we can leverage the power of AI chatbots to comfort patients and provide a first pass diagnosis based on symptoms, along with a confidence threshold of the predicted diagnosis. Goal is to enable users to get a diagnosis for their current symptoms. The hopes would be that people get a better diagnosis than what they would from googling symptoms themselves. Users can also chat with Eliza the therapy bot, when they feel like they need someone to listen to them; which has proven to be calming.
 
@@ -11,24 +11,25 @@
 
 -   **Machine Learning Performance**:
     -   Misclassification Rate - number of correctly diagnosed diseased based on the symptom.
-    -   Acceptance Criteria: Misclass rate < 0.3, meaning 70% of test data in cross validation is accurately diagnosed.
+    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate. If this proves to be the case, might explore providing the top 3 diagnoses and seeing if the correct diagnosis is indeed in the top 3.
 -   **Business Outcome**:
-    -   number of users that use this app instead of googling their symptoms.
-    -   number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
+    -   Number of users that use this app instead of googling their symptoms.
+    -   Number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
+    -   Number of stars users rate the app
 
 ## Planning
 
 ### Theme 1: Create an AI doctor that can suggest the most likely disease based on your list of symptoms. 
 
--   **Epic 1:** Create an analytic that can suggest the most likely diagnosis based on a symptom, along with a confidence interval
-	-   **US0:** Environment setup: install any required packages, libraries. Spin up ec2 on AWS. Create requirements.txt to make reproducible environment. 
+-   **Epic 1:** Create an analytic that can suggest the most likely diagnosis based on user specified symptoms, along with a confidence interval
+	-   **US0:** Environment setup: install any required packages, libraries. Spin up EC2 on AWS. Create requirements.txt to make reproducible environment. 
     -   **US1:** Find a good data set for training, including: list of symptoms, disease, and the count of disease occurrence. 
     -   **US2:** Complete data transformations in python so the data can be fed into the model
-    -   **US3:** Create a SQL database to store user input from UI and model output
+    -   **US3:** Create a AWS RDS to store user input from UI and model output
     -   **US4:** Build decision tree based classification model in python
     -   **US5:** Complete cross validation measuring misclassification rate & tune decision tree parameters until reaching an optimal threshold 
     -   **US6:** Build confidence interval into the model output 
-    -   **US7:** Create unit test scripts to test model functionality is working as expected
+    -   **US7:** Create unit test scripts to test all model functionality is working as expected
     -   **US8:** Create a CSS/HTML UI with drop down fields so users can select from a predefined list of symptoms that the model has been trained on
     -   **US9:** Create script that takes the user input from UI and flask wrapper that feeds it into the decision tree model predict function to get an output
     -   **US10:** Create functionality to display the predicted disease outputted and Confidence interval from the model onto the UI
@@ -69,10 +70,10 @@
 12. **Theme1.epic1.story12** (4pts)
 13. **Theme1.epic1.story13**  (2pts)
 
-14. **Theme1.epic2.story1**  (2pts)
-16. **Theme1.epic2.story2**  (2pts)
-17. **Theme1.epic2.story3**  (4pts)
-18. **Theme1.epic2.story4**  (2pts)
+14. **Theme2.epic1.story1**  (2pts)
+16. **Theme2.epic1.story2**  (2pts)
+17. **Theme2.epic1.story3**  (4pts)
+18. **Theme2.epic1.story4**  (2pts)
 
 
 ## Icebox
