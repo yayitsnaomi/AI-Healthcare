@@ -1,6 +1,8 @@
 
 # Healthcare AI Chatbot
 
+Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
+
 ## Project Charter
 
 **Vision**: Provide individuals across the world with access to affordable, quality healthcare. Doctors are limited and AI applications in healthcare are advancing to enable quality care via AIs and internet access.
