@@ -3,9 +3,9 @@
 
 Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
 
-Disease Symptom Data Source Credit: http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
-
 ![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/figures/Chatbot_UI_6_6_2019.png)
+
+Disease Symptom Data Source Credit: http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
 
 ## Project Charter
 
