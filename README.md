@@ -6,6 +6,7 @@ Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
 ![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/figures/Chatbot_UI_6_6_2019.png)
 
 Disease Symptom Data Source Credit: http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
+Data consists of discharge summaries of patients at New York Presbyterian Hospital admitted during 2004 with disease: disease occurrence rate, and the associated, ranked symptoms.
 
 ## Project Charter
 
