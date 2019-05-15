@@ -1,0 +1,14 @@
+flask== 1.0.2
+pyaml==18.11.0
+python-dateutil==2.8.0
+SQLAlchemy==1.3.1
+flask_sqlalchemy==2.3.2
+pytest==4.0.1
+boto3==1.9.145
+scipy==1.2.1
+requests
+pymysql
+pandas
+csv
+BeautifulSoup
+openpyxl
