@@ -1,726 +1,252 @@
-<style>
-	
-		#symptom_selector {
-    		color: green;
-  		}
-		#list_of_symptoms{
-			height: 400px;
-			width: 400px;
-		}
-		.help-tip{
-			position: absolute;
-			top: 18px;
-			right: 18px;
-			text-align: center;
-			background-color: #BCDBEA;
-			border-radius: 50%;
-			width: 24px;
-			height: 24px;
-			font-size: 14px;
-			line-height: 26px;
-			cursor: default;
-		}
-		.help-tip:before{
-			content:'?';
-			font-weight: bold;
-			color:#fff;
-		}
-		.help-tip:hover p{
-			display:block;
-			transform-origin: 100% 0%;
-			-webkit-animation: fadeIn 0.3s ease-in-out;
-			animation: fadeIn 0.3s ease-in-out;
-		}
-		.help-tip p{    /* The tooltip */
-			display: none;
-			text-align: left;
-			background-color: #1E2021;
-			padding: 20px;
-			width: 300px;
-			position: absolute;
-			border-radius: 3px;
-			box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-			right: -4px;
-			color: #FFF;
-			font-size: 13px;
-			line-height: 1.4;
-		}
-		.help-tip p:before{ /* The pointer of the tooltip */
-			position: absolute;
-			content: '';
-			width:0;
-			height: 0;
-			border:6px solid transparent;
-			border-bottom-color:#1E2021;
-			right:10px;
-			top:-12px;
-		}
-		.help-tip p:after{ /* Prevents the tooltip from being hidden */
-			width:100%;
-			height:40px;
-			content:'';
-			position: absolute;
-			top:-40px;
-			left:0;
-		}
-		/* CSS animation */
-		@-webkit-keyframes fadeIn {
-			0% { 
-				opacity:0; 
-				transform: scale(0.6);
-			}
-			100% {
-				opacity:100%;
-				transform: scale(1);
-			}
-		}
-		@keyframes fadeIn {
-			0% { opacity:0; }
-			100% { opacity:100%; }
-		}
-		.hoverWrapper:hover #hoverShow1 {
-				display: block;
-			   }
-			   
-		.hoverWrapper #hoverShow1 {
-				display: none;
-				position: relative;
-			   }
-		#header {
-			width: 100%;
-			background-color: green;
-		}
-		.container {
-			width: 800px;
-			margin: auto;
-		}
-		.h3{
-			color: gray;
-			font-size: 12px;
-			font-style: italic;
-		}
-		#left {
-			width: 450px;
-			float: left;
-			height: 250px;
-		}
-		#symptom{
-			width: 450px;
-			float: right;
-			height: 250px;
-		}
-		a {
-			color: black;
-		}
-		* {
-			color: black;
-		}
-		</style>
-		  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-		<HTML>
-			<HEAD>
-			<TITLE>Eliza+</TITLE>
-			
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-			
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-			
-			<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="js/elizabot.js"></SCRIPT>
-			<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="js/elizadata.js"></SCRIPT>	
-			<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="js/sentimood.js"></SCRIPT>
-			<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">	   
-			 // Create variables for eliza bot, eliza's speech text output, and eliz's mood sentiment to change avatar
-			 var eliza = new ElizaBot();
-			 var elizaLines = new Array();
-			 var sentiment = new Sentimood();
-			 // set chat slize
-			 var displayCols = 20;
-			 var displayRows = 60;
-			 var userSentiment = 0;
-			 
-			 // Load images for avatar to express different emotions
-			 var imgs = {};
-			 imgs[0] = "img/default-01.png";
-			 imgs[1] = "img/happy1-01.png";
-			 imgs[2] = "img/happy2-01.png";
-			 imgs[3] = "img/happy3-01.png";
-			 imgs[-1] = "img/sad1-01.png";
-			 imgs[-2] = "img/sad2-01.png";
-			 imgs[-3] = "img/sad3-01.png";
-			 
-			 function updateImage(val) {
-				 // If continuing on same sentiment
-				 if(val * userSentiment >= 0) {
-				 if(val < 0) {
-					 userSentiment -= 1;
-				 }
-				 if(val > 0) {
-					 userSentiment += 1;
-				 }
-				 }
-				 else {
-				 // switch moods
-				 userSentiment = val
-				 }
-				 
-				 if(userSentiment < -3) {
-				 userSentiment = -3
-				 }
-				 if(userSentiment > 3) {
-				 userSentiment = 3
-				 }
-				 // Update image
-				 document.getElementById('main-image').src = imgs[userSentiment];
-			 }
-			 
-			  // Reset button functionality for Eliza+ chat screen
-			 function elizaReset() {
-				 userSentiment = 0;
-				 eliza.reset();
-				 elizaLines.length = 0;
-				 elizaStep();
-			 }
-			 function elizaStep() {
-				 var f = document.forms.e_form;
-				 var userinput = f.e_input.value;
-				 
-				 //console.log(sentiment.analyze(userinput));
-				 updateImage(sentiment.analyze(userinput)['score']);
-				 if (eliza.quit) {
-				 f.e_input.value = '';
-				 if (confirm("This session is over.\nStart over?")) elizaReset();
-				 f.e_input.focus();
-				 return;
-				 }
-				 else if (userinput != '') {
-				 var usr = 'YOU:   ' + userinput;
-				 var rpl ='ELIZA: ' + eliza.transform(userinput);
-				 elizaLines.push(usr);
-				 elizaLines.push(rpl);
-				 // Format text conversation on Eliza+ output
-				 // (fit to textarea with last line free - reserved for extra line caused by word wrap)
-				 var temp  = new Array();
-				 var l = 0;
-				 for (var i=elizaLines.length-1; i>=0; i--) {
-					 l += 1 + Math.floor(elizaLines[i].length/displayCols);
-					 if (l >= displayRows) break
-					 else temp.push(elizaLines[i]);
-				 }
-				 elizaLines = temp.reverse();		 
-				 f.e_display.value = elizaLines.join('\n');
-				 }
-				 else if (elizaLines.length == 0) {
-				 // no input and no saved lines -> output initial
-				 var initial = 'ELIZA: ' + eliza.getInitial();
-				 elizaLines.push(initial);
-				 f.e_display.value = initial + '\n';
-				 }
-				 f.e_input.value = '';
-				 f.e_input.focus();
-			 }
-			</SCRIPT>
-			</HEAD>
-			
-		
-		
-		
-		
-			<BODY onload="window.setTimeout('elizaReset()',100)">
-		
-		
-		
-					<div id="header">
-				<div class='container'><center>How can we help you?!</center></div>
-			</div>
-			<div class='container'>
-		
-						 
-				<div id="left">
-					<center>
-			
-				<div class="hoverWrapper"><H3>Dr. Bot</H3>
-					<div class="help-tip">
-							<p>Doc is here to help you diagnose your symptoms!</p>
-				</div>	
-						<div id="hoverShow1">Doc is here to help you diagnose your symptoms!</div>
-					   </div>
-		
-		
-					<img id="doc-image" src="img/DoctorAvatar.png" width=150px height=200px alt="text"></center>
-					<H3>Please select your symptoms: </H3>
-
-					</center>
-
-					<select id = "list_of_symptoms" name="list_of_symptoms" multiple="multiple">
-							<option>pain chest</option> 
-							<option>shortness of breath</option> 
-							<option>dizziness</option> 
-							<option>asthenia</option>
-							<option>fall</option> 
-							<option>syncope</option> 
-							<option>vertigo</option> 
-							<option>sweat</option> 
-							<option>sweating increased</option>
-							<option>palpitation</option> 
-							<option>nausea</option> 
-							<option>angina pectoris</option> 
-							<option>pressure chest</option>
-							<option>polyuria</option> 
-							<option>polydypsia</option> 
-							<option>orthopnea</option> 
-							<option>rale</option> 
-							<option>unresponsiveness</option>
-							<option>mental status changes</option> 
-							<option>vomiting</option> 
-							<option>labored breathing</option>
-							<option>feeling suicidal</option> 
-							<option>suicidal</option> 
-							<option>hallucinations auditory</option>
-							<option>feeling hopeless</option> 
-							<option>weepiness</option> 
-							<option>sleeplessness</option>
-							<option>motor retardation</option> 
-							<option>irritable mood</option> 
-							<option>blackout</option>
-							<option>mood depressed</option> 
-							<option>hallucinations visual</option> 
-							<option>worry</option> 
-							<option>agitation</option>
-							<option>tremor</option> 
-							<option>intoxication</option> 
-							<option>verbal auditory hallucinations</option>
-							<option>energy increased</option> 
-							<option>difficulty</option> 
-							<option>nightmare</option>
-							<option>unable to concentrate</option> 
-							<option>homelessness</option> 
-							<option>hypokinesia</option>
-							<option>dyspnea on exertion</option> 
-							<option>chest tightness</option> 
-							<option>cough</option> 
-							<option>fever</option>
-							<option>decreased translucency</option> 
-							<option>productive cough</option> 
-							<option>pleuritic pain</option>
-							<option>yellow sputum</option> 
-							<option>breath sounds decreased</option> 
-							<option>chill</option> 
-							<option>rhonchus</option>
-							<option>green sputum</option> 
-							<option>non-productive cough</option> 
-							<option>wheezing</option> 
-							<option>haemoptysis</option>
-							<option>distress respiratory</option> 
-							<option>tachypnea</option> 
-							<option>malaise</option> 
-							<option>night sweat</option>
-							<option>jugular venous distention</option> 
-							<option>dyspnea</option> 
-							<option>dysarthria</option>
-							<option>speech slurred</option> 
-							<option>facial paresis</option> 
-							<option>hemiplegia</option> 
-							<option>seizure</option>
-							<option>numbness</option> 
-							<option>symptom aggravating factors</option> 
-							<option>st segment elevation</option>
-							<option>st segment depression</option> 
-							<option>t wave inverted</option> 
-							<option>presence of q wave</option>
-							<option>chest discomfort</option> 
-							<option>bradycardia</option> 
-							<option>pain</option> 
-							<option>nonsmoker</option> 
-							<option>erythema</option>
-							<option>hepatosplenomegaly</option> 
-							<option>pruritus</option> 
-							<option>diarrhea</option> 
-							<option>abscess bacterial</option>
-							<option>swelling</option> 
-							<option>apyrexial</option> 
-							<option>dysuria</option> 
-							<option>hematuria</option>
-							<option>renal angle tenderness</option> 
-							<option>lethargy</option> 
-							<option>hyponatremia</option>
-							<option>hemodynamically stable</option> 
-							<option>difficulty passing urine</option>
-							<option>consciousness clear</option> 
-							<option>guaiac positive</option> 
-							<option>monoclonal</option>
-							<option>ecchymosis</option> 
-							<option>tumor cell invasion</option> 
-							<option>haemorrhage</option> 
-							<option>pallor</option>
-							<option>fatigue</option> 
-							<option>heme positive</option> 
-							<option>pain back</option> 
-							<option>orthostasis</option>
-							<option>arthralgia</option> 
-							<option>transaminitis</option> 
-							<option>sputum purulent</option> 
-							<option>hypoxemia</option>
-							<option>hypercapnia</option> 
-							<option>patient non compliance</option> 
-							<option>unconscious state</option>
-							<option>bedridden</option> 
-							<option>abdominal tenderness</option> 
-							<option>unsteady gait</option>
-							<option>hyperkalemia</option> 
-							<option>urgency ofÂ\xa0micturition</option> 
-							<option>ascites</option>
-							<option>hypotension</option> 
-							<option>enuresis</option> 
-							<option>asterixis</option> 
-							<option>muscle twitch</option> 
-							<option>sleepy</option>
-							<option>headache</option> 
-							<option>lightheadedness</option> 
-							<option>food intolerance</option>
-							<option>numbness of hand</option> 
-							<option>general discomfort</option> 
-							<option>drowsiness</option>
-							<option>stiffness</option> 
-							<option>prostatism</option> 
-							<option>weight gain</option> 
-							<option>tired</option>
-							<option>mass of body structure</option> 
-							<option>has religious belief</option> 
-							<option>nervousness</option>
-							<option>formication</option> 
-							<option>hot flush</option> 
-							<option>lesion</option> 
-							<option>cushingoid facies</option>
-							<option>cushingoidÂ\xa0habitus</option> 
-							<option>emphysematous change</option>
-							<option>decreased body weight</option> 
-							<option>hoarseness</option> 
-							<option>thicken</option>
-							<option>spontaneous rupture of membranes</option> 
-							<option>muscle hypotonia</option>
-							<option>hypotonic</option> 
-							<option>redness</option> 
-							<option>hypesthesia</option> 
-							<option>hyperacusis</option>
-							<option>scratch marks</option> 
-							<option>sore to touch</option> 
-							<option>burning sensation</option>
-							<option>satiety early</option> 
-							<option>throbbing sensation quality</option>
-							<option>sensory discomfort</option> 
-							<option>constipation</option> 
-							<option>pain abdominal</option>
-							<option>heartburn</option> 
-							<option>breech presentation</option> 
-							<option>cyanosis</option>
-							<option>pain in lower limb</option> 
-							<option>cardiomegaly</option> 
-							<option>clonus</option> 
-							<option>unwell</option>
-							<option>anorexia</option> 
-							<option>history of - blackout</option> 
-							<option>anosmia</option>
-							<option>metastatic lesion</option> 
-							<option>hemianopsia homonymous</option>
-							<option>hematocrit decreased</option> 
-							<option>neck stiffness</option> 
-							<option>cicatrisation</option>
-							<option>hypometabolism</option> 
-							<option>aura</option> 
-							<option>myoclonus</option> 
-							<option>gurgle</option>
-							<option>wheelchair bound</option> 
-							<option>leftÂ\xa0atrialÂ\xa0hypertrophy</option> 
-							<option>oliguria</option>
-							<option>catatonia</option> 
-							<option>unhappy</option> 
-							<option>paresthesia</option> 
-							<option>gravida 0</option> 
-							<option>lung nodule</option>
-							<option>distended abdomen</option> 
-							<option>ache</option> 
-							<option>macerated skin</option> 
-							<option>heavy feeling</option>
-							<option>rest pain</option> 
-							<option>sinus rhythm</option> 
-							<option>withdraw</option> 
-							<option>behavior hyperactive</option>
-							<option>terrify</option> 
-							<option>photopsia</option> 
-							<option>giddy mood</option> 
-							<option>disturbed family</option>
-							<option>hypersomnia</option> 
-							<option>hyperhidrosis disorder</option> 
-							<option>mydriasis</option>
-							<option>extrapyramidal sign</option> 
-							<option>loose associations</option> 
-							<option>exhaustion</option> 
-							<option>snore</option>
-							<option>r wave feature</option> 
-							<option>overweight</option> 
-							<option>systolic murmur</option> 
-							<option>asymptomatic</option>
-							<option>splenomegaly</option> 
-							<option>bleeding of vagina</option> 
-							<option>macule</option> 
-							<option>photophobia</option>
-							<option>painful swallowing</option> 
-							<option>cachexia</option> 
-							<option>hypocalcemia result</option>
-							<option>hypothermia natural</option> 
-							<option>atypia</option> 
-							<option>general unsteadiness</option>
-							<option>throat sore</option> 
-							<option>snuffle</option> 
-							<option>hacking cough</option> 
-							<option>stridor</option> 
-							<option>paresis</option>
-							<option>aphagia</option> 
-							<option>focal seizures</option> 
-							<option>abnormal sensation</option> 
-							<option>stupor</option>
-							<option>fremitus</option> 
-							<option>Stahli</option>s line</option> 
-							<option>stinging sensation</option> 
-							<option>paralyse</option>
-							<option>hirsutism</option> 
-							<option>sniffle</option> 
-							<option>bradykinesia</option> 
-							<option>out of breath</option>
-							<option>urge incontinence</option> 
-							<option>vision blurred</option> 
-							<option>room spinning</option>
-							<option>rambling speech</option> 
-							<option>clumsiness</option> 
-							<option>decreased stool caliber</option>
-							<option>hematochezia</option> 
-							<option>egophony</option> 
-							<option>scar tissue</option> 
-							<option>neologism</option>
-							<option>decompensation</option> 
-							<option>stool color yellow</option>
-							<option>rigor - temperature-associated observation</option> 
-							<option>paraparesis</option>
-							<option>moody</option> 
-							<option>fear of falling</option> 
-							<option>spasm</option> 
-							<option>hyperventilation</option>
-							<option>excruciating pain</option> 
-							<option>gag</option> 
-							<option>posturing</option> 
-							<option>pulse absent</option>
-							<option>dysesthesia</option> 
-							<option>polymyalgia</option> 
-							<option>passed stones</option>
-							<option>qt interval prolonged</option> 
-							<option>ataxia</option> 
-							<option>Heberden</option>s node</option>
-							<option>hepatomegaly</option> 
-							<option>sciatica</option> 
-							<option>frothy sputum</option> 
-							<option>mass in breast</option>
-							<option>retropulsion</option> 
-							<option>estrogen use</option> 
-							<option>hypersomnolence</option> 
-							<option>underweight</option>
-							<option>dullness</option> 
-							<option>red blotches</option> 
-							<option>colic abdominal</option> 
-							<option>hypokalemia</option>
-							<option>hunger</option> 
-							<option>prostate tender</option> 
-							<option>pain foot</option> 
-							<option>urinary hesitation</option>
-							<option>disequilibrium</option> 
-							<option>flushing</option> 
-							<option>indifferent mood</option> 
-							<option>urinoma</option>
-							<option>hypoalbuminemia</option> 
-							<option>pustule</option> 
-							<option>slowing of urinary stream</option>
-							<option>extreme exhaustion</option> 
-							<option>no status change</option> 
-							<option>breakthrough pain</option>
-							<option>pansystolic murmur</option> 
-							<option>systolic ejection murmur</option> 
-							<option>stuffy nose</option>
-							<option>barking cough</option> 
-							<option>rapid shallow breathing</option> 
-							<option>noisy respiration</option>
-							<option>nasal discharge present</option> 
-							<option>frail</option> 
-							<option>cystic lesion</option>
-							<option>projectile vomiting</option> 
-							<option>heavy legs</option> 
-							<option>titubation</option>
-							<option>dysdiadochokinesia</option> 
-							<option>achalasia</option> 
-							<option>side pain</option> 
-							<option>monocytosis</option>
-							<option>posteriorÂ\xa0rhinorrhea</option> 
-							<option>incoherent</option> 
-							<option>lameness</option>
-							<option>claudication</option> 
-							<option>clammy skin</option> 
-							<option>mediastinal shift</option>
-							<option>nausea and vomiting</option> 
-							<option>awakening early</option> 
-							<option>tenesmus</option> 
-							<option>fecaluria</option>
-							<option>pneumatouria</option> 
-							<option>todd paralysis</option> 
-							<option>alcoholic withdrawal symptoms</option>
-							<option>myalgia</option> 
-							<option>dyspareunia</option> 
-							<option>poor dentition</option> 
-							<option>floppy</option>
-							<option>inappropriate affect</option> 
-							<option>poor feeding</option> 
-							<option>moan</option> 
-							<option>welt</option> 
-							<option>tinnitus</option>
-							<option>hydropneumothorax</option> 
-							<option>superimposition</option> 
-							<option>feeling strange</option>
-							<option>uncoordination</option> 
-							<option>absences finding</option> 
-							<option>tonic seizures</option>
-							<option>debilitation</option> 
-							<option>impaired cognition</option> 
-							<option>drool</option> 
-							<option>pin-point pupils</option>
-							<option>tremor resting</option> 
-							<option>groggy</option> 
-							<option>adverse reaction</option> 
-							<option>adverse effect</option>
-							<option>abdominal bloating</option> 
-							<option>fatigability</option> 
-							<option>para 2</option> 
-							<option>abortion</option>
-							<option>intermenstrual heavy bleeding</option> 
-							<option>previous pregnancies 2</option>
-							<option>primigravida</option> 
-							<option>abnormally hard consistency</option> 
-							<option>proteinemia</option>
-							<option>pain neck</option> 
-							<option>dizzy spells</option> 
-							<option>shooting pain</option> 
-							<option>hyperemesis</option>
-							<option>milky</option> 
-							<option>regurgitates after swallowing</option> 
-							<option>lip smacking</option>
-							<option>phonophobia</option> 
-							<option>rolling of eyes</option> 
-							<option>ambidexterity</option>
-							<option>pulsusÂ\xa0paradoxus</option> 
-							<option>gravida 10</option> 
-							<option>bruit</option>
-							<option>breath-holding spell</option> 
-							<option>scleralÂ\xa0icterus</option> 
-							<option>retch</option> 
-							<option>blanch</option>
-							<option>elation</option> 
-							<option>verbally abusive behavior</option> 
-							<option>transsexual</option>
-							<option>behavior showing increased motor activity</option>
-							<option>coordination abnormal</option> 
-							<option>choke</option> 
-							<option>bowel sounds decreased</option>
-							<option>no known drug allergies</option> 
-							<option>low back pain</option> 
-							<option>charleyhorse</option>
-							<option>sedentary</option> 
-							<option>feels hot/feverish</option> 
-							<option>flare</option>
-							<option>pericardial friction rub</option> 
-							<option>hoard</option> 
-							<option>panic</option>
-							<option>cardiovascular finding</option> 
-							<option>cardiovascular event</option>
-							<option>soft tissue swelling</option> 
-							<option>rhd positive</option> 
-							<option>para 1</option> 
-							<option>nasal flaring</option>
-							<option>sneeze</option> 
-							<option>hypertonicity</option> 
-							<option>Murphy</option>s sign</option> 
-							<option>flatulence</option>
-							<option>gasping for breath</option> 
-							<option>feces in rectum</option> 
-							<option>prodrome</option>
-							<option>hypoproteinemia</option> 
-							<option>alcohol binge episode</option> 
-							<option>abdomen acute</option>
-							<option>air fluid level</option> 
-							<option>catching breath</option> 
-							<option>large-for-dates fetus</option>
-							<option>immobile</option> 
-							<option>homicidal thoughts</option>
-						  </select>
-						  <p><b>Selected Symptoms:</b></p>	
-						  <div id ="symptom_selector"></div>
-
-						  <button onclick="myFunction()">View Decision Tree</button>
-
-						  </p>
-
-				</div>
-				
-				<div id= "symptom">
-						
-				 
-						<center>
-						
-						<div class="hoverWrapper"><H3>Eliza+</H3>
-							<div id="hoverShow1">Eliza is here to chat about anything to ensure you're feeling happy!!</div>
-						   </div>
-						<img id="main-image" src="img/default-01.png" width=250px height=250px>
-						<TABLE>
-						<FORM NAME="e_form" onsubmit="elizaStep();return false">
-							<TR>
-							<TD COLSPAN="3">
-								<TEXTAREA class="form-control" NAME="e_display" COLS="60" ROWS="20"></TEXTAREA>
-							</TD>
-							</TR>
-							<TR VALIGN="middle">
-							<TD>
-								<INPUT class="form-control" TYPE="text" NAME="e_input" SIZE="43">
-							</TD>
-							<TD ALIGN="left">
-								<INPUT class="btn btn-default" TYPE="submit" VALUE="Talk">
-							</TD>
-							<TD ALIGN="right">
-								<INPUT class="btn btn-default" TYPE="reset" VALUE="Reset" onClick="window.setTimeout('elizaReset()',100)">
-							</TD>
-							</TR>
-						</FORM>
-						</TABLE>
-					</center>
-				
-			</div>
-		
-		</div>
-		
-		<script>
-				$( "select" )
-				  .change(function() {
-					var str = " ";
-					$( "select option:selected" ).each(function() {
-					  str += $( this ).text() + " ";
-					});
-					$( "#symptom_selector" ).text( str );
-				  })
-				  .trigger( "change" );
-
-				  function myFunction() {
-  document.getElementById("decisionTree").innerHTML = "Hello World";
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+	  * {
+  box-sizing: border-box;
 }
-function closeIFrame(){
-     $('#decisionTreeiframe').remove();
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
-				</script>
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding in columns */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+         body {
+         margin: 0;
+         font-family: Arial, Helvetica, sans-serif;
+         }
+         .topnav {
+         overflow: hidden;
+         background-color: #333;
+         }
+         .topnav a {
+         float: left;
+         color: #f2f2f2;
+         text-align: center;
+         padding: 14px 16px;
+         text-decoration: none;
+         font-size: 17px;
+         }
+         .topnav a:hover {
+         background-color: #ddd;
+         color: black;
+         }
+         .topnav a.active {
+         background-color: #4CAF50;
+         color: white;
+         }
+      </style>
+   </head>
+   <body>
+      <div style="padding-left:16px">
+         <h2>Good Morning, Naomi!</h2>
+         <p>Which doctor would you like to see today..?</p>
+      </div>
+      <div class="topnav">
+         <a a class="active" href="index.html">| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</a>
+		 <a href="index_doc_bot.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General Doctor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</a>
+         <a href="index_heart.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cardiologist &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</a>
+         <a href="eliza.html">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Psychologist  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</a>
+         <a href="#index_brain_tumor.html"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Neurologist&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;|</a>
+      </div>
+   </body>
+   <style>
+      #symptom_selector {
+      color: green;
+      }
+      #list_of_symptoms{
+      height: 400px;
+      width: 400px;
+      }
+      .help-tip{
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      text-align: center;
+      background-color: #BCDBEA;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      line-height: 26px;
+      cursor: default;
+      }
+      .help-tip:before{
+      content:'?';
+      font-weight: bold;
+      color:#fff;
+      }
+      .help-tip:hover p{
+      display:block;
+      transform-origin: 100% 0%;
+      -webkit-animation: fadeIn 0.3s ease-in-out;
+      animation: fadeIn 0.3s ease-in-out;
+      }
+      .help-tip p{    /* The tooltip */
+      display: none;
+      text-align: left;
+      background-color: #1E2021;
+      padding: 20px;
+      width: 300px;
+      position: absolute;
+      border-radius: 3px;
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+      right: -4px;
+      color: #FFF;
+      font-size: 13px;
+      line-height: 1.4;
+      }
+      .help-tip p:before{ /* The pointer of the tooltip */
+      position: absolute;
+      content: '';
+      width:0;
+      height: 0;
+      border:6px solid transparent;
+      border-bottom-color:#1E2021;
+      right:10px;
+      top:-12px;
+      }
+      .help-tip p:after{ /* Prevents the tooltip from being hidden */
+      width:100%;
+      height:40px;
+      content:'';
+      position: absolute;
+      top:-40px;
+      left:0;
+      }
+      /* CSS animation */
+      @-webkit-keyframes fadeIn {
+      0% { 
+      opacity:0; 
+      transform: scale(0.6);
+      }
+      100% {
+      opacity:100%;
+      transform: scale(1);
+      }
+      }
+      @keyframes fadeIn {
+      0% { opacity:0; }
+      100% { opacity:100%; }
+      }
+      .hoverWrapper:hover #hoverShow1 {
+      display: block;
+      }
+      .hoverWrapper #hoverShow1 {
+      display: none;
+      position: relative;
+      }
+      #header {
+      width: 100%;
+      background-color: green;
+      }
+      .container {
+      width: 800px;
+      margin: auto;
+      }
+      .h3{
+      color: gray;
+      font-size: 12px;
+      font-style: italic;
+      }
+      #left {
+      width: 450px;
+      float: left;
+      height: 250px;
+      }
+      #symptom{
+      width: 450px;
+      float: right;
+      height: 250px;
+      }
+      a {
+      color: black;
+      }
+      * {
+      color: black;
+      }
+   </style>
+
+
+
+		 <div class="row">
+  <div class="column">
+    <div class="card">
+	<h1> Dr. Bot </h1>
+	<img id="doc-image" src="img/doctoravatar.png" width=200px height=200px alt="text">
+	<p> Dr. Bot is a <b>Decision Tree algorithm </b> that will output the most likely disease based on a patient's symptoms.
+	  </p>
 	
+	</div>
+  </div>
+  <div class="column">
+    <div class="card">
+	<h1> Dr. Heart </h1>
+	<img id="doc-image" src="img/Cardiologist.png" width=200px height=200px alt="text">
+	<p> Dr. Heart is a <b>Support Vector Machine algorithm </b> that can predict the likelihood of heart disease based on 14 features.</p>
+	</div>
+  </div>
+  <div class="column">
+    <div class="card">
+		<h1> Dr. Eliza </h1>
+	<img id="doc-image" src="img/happy1-01.png" width=200px height=200px alt="text">
+	<p> Dr. Eliza is a <b>Chat Bot</b> that can converse with patients to help calm their anxieties and make them feel at ease.</p>
 	
-			</BODY>
-		
-		</HTML>
+	</div>
+  </div>
+  <div class="column">
+    <div class="card">
+	<h1> Dr. Brain </h1>
+	<img id="doc-image" src="img/neurologist.png" width=200px height=200px alt="text">
+	<p> Dr. Brain is a <b>Convolutional Neural Network </b> that will classify MRI scans as positive or negative for brain tumors.</p>
+	
+	</div>
+  </div>
+
+      </div>
+	  <div id = "right">
+	  </div>
+      </h1>
+      <!--  <iframe name= "decisionTreeiframe" src="models/decisionTree.pdf" width = "1100px" height = "1000px"></iframe>
+         </iframe> -->
+      </p>
+   </div>
+   <div id= "symptom">
+   </div>
+   </div>
+   </BODY>
+</HTML>
