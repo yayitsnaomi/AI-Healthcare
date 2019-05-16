@@ -24,8 +24,8 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
 **Success criteria**:
 
 -   **Machine Learning Performance**:
-    -   Misclassification Rate - number of correctly diagnosed diseased based on the symptom.
-    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate. If this proves to be the case, might explore providing the top 3 diagnoses and seeing if the correct diagnosis is indeed in the top 3.
+    -   Misclassification Rate - number of correctly diagnosed based on the patient history.
+    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate.
 -   **Business Outcome**:
     -   Number of users that use this app instead of googling their symptoms.
     -   Number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
