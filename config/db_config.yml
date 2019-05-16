@@ -1,0 +1,4 @@
+type: mysql+pymysql
+host: mysql-nw-nak133.cln3kjoiuwxs.us-west-2.rds.amazonaws.com
+port: 3306
+dbname: msia423
