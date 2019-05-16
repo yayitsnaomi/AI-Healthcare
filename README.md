@@ -1,7 +1,7 @@
 
 # Healthcare AI
 
-Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
+Link: https://yayitsnaomi.github.io/AI-Healthcare/
 
 ![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/img/AVC_midpoint_UI_update.png)
 
