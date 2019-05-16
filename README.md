@@ -1,5 +1,5 @@
 
-# Healthcare AI Chatbot
+# Healthcare AI
 
 Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
 
