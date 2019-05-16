@@ -50,7 +50,7 @@ Data consists of 14 key attributes of patient health to predict level of heart d
     -    **US12:** Create logging for easy debugging and error notifications
     -    **US13:** Deploy into Production environment and double check UAT test cases
     
-### Theme 2: Create an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
+### Theme 2: Integrate an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
 
 -   **Epic 2:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
     -   **US1:** Integrate ELIZA Javascript codes: Elizabot.js, elizadata.js, setimood.js 
