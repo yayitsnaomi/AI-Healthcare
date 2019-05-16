@@ -55,7 +55,7 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 -   **Epic 2:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
     -   **US1:** Integrate ELIZA Javascript codes: Elizabot.js, elizadata.js, setimood.js 
     -   **US2:** Integrate ELIZA images for avatar: happy, sad, excited, etc
-    -   **US3:** Create custom HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
+    -   **US3:** IntegrateE ELIZA UI scripts into HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
     -   **US4:** UAT test scripts to test ELIZA is properly integrated into the UI and all functionality is working as expected
 
 ## Backlog
