@@ -11,17 +11,20 @@ https://www.kaggle.com/ronitf/heart-disease-uci
 
 Data consists of 14 key attributes of patient health to predict level of heart disease (an integer valued from 0 (no presence) to 4).
 
+
 **AI Doctor: Disease Symptom Data Source Credit:** http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
 
 Data consists of discharge summaries of patients at New York Presbyterian Hospital admitted during 2004 with disease: disease occurrence rate, and the associated, ranked symptoms.
 
-**AI Therapist Credit: Eliz Bot**
-Eliza+ builds on:
+
+**AI Therapist Credit: Eliza+ Bot Builds on:**
+
 **ELIZA implementation**: elizabot.js by Norbert Landsteiner: http://www.masswerk.at/elizabot/
 
 **AFINN sentiment analysis**: Sentimood by Ethan Arterberry (https://github.com/soops/sentimood) a client-side version of Sentimental by Roman K Yudin and Kevin M Roth (https://github.com/thinkroth/Sentimental)
 
 **Avatar graphics**: Girl avatar by Branhy (https://www.freepik.com/free-vector/girl-avatars-collection_872957.htm)
+
 
 ## Project Charter
 
