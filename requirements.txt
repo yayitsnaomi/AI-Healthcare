@@ -29,7 +29,6 @@ numpy==1.16.3
 pandas==0.24.2
 pyasn1==0.4.4
 pycparser==2.19
-pycrypto==2.6.1
 pylint==2.3.1
 PyMySQL==0.9.3
 pyOpenSSL==19.0.0
