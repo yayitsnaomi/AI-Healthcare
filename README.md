@@ -61,10 +61,18 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
     -   **US11**  Create UAT test scripts to test that UI is working as expected to intake selections and output accordingly
     -    **US12:** Create logging for easy debugging and error notifications
     -    **US13:** Deploy into Production environment and double check UAT test cases
-    
-### Theme 2: Integrate an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
 
--   **Epic 2:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
+### Theme 2: Create an AI doctor that can diagnose heart disease based on patient health factors
+-   **Epic 2:** Create an analytic that can suggest the most likely to diagnose heart disease based on patient health factors
+    -   **US14:** Environment setup: install any required packages, libraries. Spin up EC2 on AWS. Create requirements.txt to make reproducible environment.
+    -   **US15:** Find a good data set for training, including: list of features of heart disease
+    -   **US16:** Build SVM classification model in python
+    -   **US17:** Build UI of cardiologist doctor 
+
+    
+### Theme 3: Integrate an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
+
+-   **Epic 3:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
     -   **US1:** Integrate ELIZA Javascript codes: Elizabot.js, elizadata.js, setimood.js 
     -   **US2:** Integrate ELIZA images for avatar: happy, sad, excited, etc
     -   **US3:** IntegrateE ELIZA UI scripts into HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
@@ -80,11 +88,11 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
 -   8 points - big and needs to be broken down more when it comes to execution (okay as placeholder for future work though)
     
     
-0.  **Theme1.epic1.story0** (2pts) - PLANNED: sprint 1
-1.  **Theme1.epic1.story1** (2pts) - PLANNED: sprint 1
-2.  **Theme1.epic1.story2** (1pts) - PLANNED: sprint 1
-3.  **Theme1.epic1.story3** (2pts) - PLANNED: sprint 1
-4.  **Theme1.epic1.story4** (4pts) - PLANNED: sprint 1
+0.  **Theme1.epic1.story0** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
+1.  **Theme1.epic1.story1** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
+2.  **Theme1.epic1.story2** (1pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
+3.  **Theme1.epic1.story3** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
+4.  **Theme1.epic1.story4** (4pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
 5.  **Theme1.epic1.story5** (2pts)
 6.  **Theme1.epic1.story6** (1pts)
 7.  **Theme1.epic1.story7** (4pts)
@@ -95,10 +103,16 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
 12. **Theme1.epic1.story12** (4pts)
 13. **Theme1.epic1.story13**  (2pts)
 
-14. **Theme2.epic1.story1**  (2pts)
-16. **Theme2.epic1.story2**  (2pts)
-17. **Theme2.epic1.story3**  (4pts)
-18. **Theme2.epic1.story4**  (2pts)
+14. **Theme2.epic1.story1**  (2pts) - COMPLETED: sprint 1
+15. **Theme2.epic1.story2**  (2pts) - COMPLETED: sprint 1
+16. **Theme2.epic1.story3**  (4pts) - COMPLETED: sprint 1
+17. **Theme2.epic1.story4**  (2pts) - COMPLETED: sprint 1
+
+
+14. **Theme3.epic1.story1**  (2pts) - COMPLETED: sprint 1
+16. **Theme3.epic1.story2**  (2pts) - COMPLETED: sprint 1
+17. **Theme3.epic1.story3**  (4pts) - COMPLETED: sprint 1
+18. **Theme3.epic1.story4**  (2pts) - COMPLETED: sprint 1
 
 
 ## Icebox
@@ -155,3 +169,4 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
 ├── config.py                         <- Configuration file for Flask app
 ├── requirements.txt                  <- Python package dependencies 
 ```
+
