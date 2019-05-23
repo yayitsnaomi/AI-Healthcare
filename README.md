@@ -1,13 +1,30 @@
 
-# Healthcare AI Chatbot
+# Healthcare AI
 
-Link: https://yayitsnaomi.github.io/Chatbot-AI-Healthcare/
+Link: https://yayitsnaomi.github.io/AI-Healthcare/
 
-![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/figures/Chatbot_UI_6_6_2019.png)
+![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/img/cardiologist.png)
 
-Disease Symptom Data Source Credit: http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
+
+**AI Cardiologist: Heart Disease Data Source Credit:**
+https://www.kaggle.com/ronitf/heart-disease-uci
+
+Data consists of 14 key attributes of patient health to predict level of heart disease (an integer valued from 0 (no presence) to 4).
+
+
+**AI Doctor: Disease Symptom Data Source Credit:** http://people.dbmi.columbia.edu/~friedma/Projects/DiseaseSymptomKB/index.html
 
 Data consists of discharge summaries of patients at New York Presbyterian Hospital admitted during 2004 with disease: disease occurrence rate, and the associated, ranked symptoms.
+
+
+**AI Therapist Credit: Eliza+ Bot Builds on:**
+
+**ELIZA implementation**: elizabot.js by Norbert Landsteiner: http://www.masswerk.at/elizabot/
+
+**AFINN sentiment analysis**: Sentimood by Ethan Arterberry (https://github.com/soops/sentimood) a client-side version of Sentimental by Roman K Yudin and Kevin M Roth (https://github.com/thinkroth/Sentimental)
+
+**Avatar graphics**: Girl avatar by Branhy (https://www.freepik.com/free-vector/girl-avatars-collection_872957.htm)
+
 
 ## Project Charter
 
@@ -18,8 +35,8 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
 **Success criteria**:
 
 -   **Machine Learning Performance**:
-    -   Misclassification Rate - number of correctly diagnosed diseased based on the symptom.
-    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate. If this proves to be the case, might explore providing the top 3 diagnoses and seeing if the correct diagnosis is indeed in the top 3.
+    -   Misclassification Rate - number of correctly diagnosed based on the patient history.
+    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate.
 -   **Business Outcome**:
     -   Number of users that use this app instead of googling their symptoms.
     -   Number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
@@ -44,7 +61,6 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
     -   **US11**  Create UAT test scripts to test that UI is working as expected to intake selections and output accordingly
     -    **US12:** Create logging for easy debugging and error notifications
     -    **US13:** Deploy into Production environment and double check UAT test cases
-    
 
 ### Theme 2: Create an AI doctor that can diagnose heart disease based on patient health factors
 -   **Epic 2:** Create an analytic that can suggest the most likely to diagnose heart disease based on patient health factors
@@ -54,12 +70,12 @@ Data consists of discharge summaries of patients at New York Presbyterian Hospit
     -   **US17:** Build UI of cardiologist doctor 
 
     
-### Theme 3: Create an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
+### Theme 3: Integrate an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
 
 -   **Epic 3:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
     -   **US1:** Integrate ELIZA Javascript codes: Elizabot.js, elizadata.js, setimood.js 
     -   **US2:** Integrate ELIZA images for avatar: happy, sad, excited, etc
-    -   **US3:** Create custom HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
+    -   **US3:** IntegrateE ELIZA UI scripts into HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
     -   **US4:** UAT test scripts to test ELIZA is properly integrated into the UI and all functionality is working as expected
 
 ## Backlog
