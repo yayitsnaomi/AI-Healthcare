@@ -1,0 +1,33 @@
+ingest_data:
+    db_name: msia423
+    conn_type: 'mysql+pymysql'
+    host: mysql-nw-nak133.cln3kjoiuwxs.us-west-2.rds.amazonaws.com
+    port: 3306
+load_data:
+    db_name: msia423
+    conn_type: 'mysql+pymysql'
+    host: mysql-nw-nak133.cln3kjoiuwxs.us-west-2.rds.amazonaws.com
+    port: 3306
+    s3_bucket: 'healthcarechatbot'
+    s3_raw: data/heart.csv
+    s3_clean: data/heart_clean.csv
+generate_features:
+    s3_bucket: 'healthcarechatbot'
+    s3_clean: data/heart_clean.csv
+    s3_features: data/heart_features.csv
+train_model:
+    s3_bucket: 'healthcarechatbot'
+    s3_features: data/heart_features.csv
+    test_size: 0.3
+    s3_x_test:  x_test.npy
+    s3_y_test:  y_test.npy
+    s3_model: 'model.pkl'
+    model_features: ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach','exang', 'oldpeak', 'slope', 'ca', 'thal', 'target']
+score_model:
+    s3_bucket: 'healthcarechatbot'
+    s3_model: 'model.pkl'
+    s3_x_test: x_test.npy
+    s3_y_test: y_test.npy
+    confusion_path: figures/confusion_matrix.png
+    accuracy_path: figures/accuracy.csv
+    column_names: ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach','exang', 'oldpeak', 'slope', 'ca', 'thal', 'target']
