@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   </head>
+
+
+   <body>
+      <div style="padding-left:16px">
+         <h2>Good Morning, Naomi!</h2>
+         <div>
+            <h1> {{result}} </h1>
+         </div>
+         <p></p>
+      </div>
+   </body>
+
+   <meta charset="UTF-8">
+      <title>Patient Admission</title>
+      <link href="static/css/form.css" rel="stylesheet" type="text/css">
+      <script src="js/validation.js"></script>
+      </head>
+      <div>
+      <img id="doc-image" align="left" src="static/cardiologist.png" width=400px height=500px  alt="text">
+      <body class="zf-backgroundBg">
+         <!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
+         <div class="zf-templateWidth">
+         <form method="post" action="{{ url_for('add_entry') }}" class="add-entry" >
+          <dl>
+               <div class="zf-templateWrapper">
+                  <!---------template Header Starts Here---------->
+                  <ul class="zf-tempHeadBdr">
+                     <li class="zf-tempHeadContBdr">
+                        <h2 class="zf-frmTitle"><em>Patient Admission</em></h2>
+                        <p class="zf-frmDesc"></p>
+                        <div class="zf-clearBoth"></div>
+                     </li>
+                  </ul>
+                  <!---------template Header Ends Here---------->
+                  <!---------template Container Starts Here---------->
+                  <div class="zf-subContWrap zf-leftAlign">
+                     <ul>
+                        <!---------Name Starts Here----------> 
+                        <li class="zf-tempFrmWrapper zf-name zf-namemedium">
+                           <label class="zf-labelName">Full Name
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv zf-twoType"  >
+                              <div class="zf-nameWrapper"  >
+                                 <span> <input type="text" maxlength="255" name="Name_First" fieldType=7 /><label>First</label> </span> 
+                                 </span> </span>
+                                 <span> <input type="text" maxlength="255" name="Name_Last" fieldType=7 /><label>Last</label> </span> 
+                                 </span> </span>
+                                 <div class="zf-clearBoth"></div>
+                              </div>
+                              <p id="Name_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Name Ends Here----------> 
+                        <!---------Number Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Age 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input name="age" id="age" type="number" checktype="c2" value="" maxlength="18"/></span> 
+                              <p id="Number_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Dropdown for Gender Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Gender
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input name="sex" id="sex" type="number" checktype="c2" value="" maxlength="18"/></span> 
+                              <p id="Number_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">0 for male; 1 for female</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Dropdown Cp Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Chest Pain Type
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input name="cp" id="sex" type="number" checktype="c2" value="" maxlength="18"/></span> 
+                              <p id="Number_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">1 = typical angina;2 = atypical angina;3 = non - anginal pain;4 = asymptotic</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Number trestbps Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Resting Blood Pressure 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="trestbps" checktype="c2" value="" maxlength="18" id="trestbps"/></span> 
+                              <p id="Number1_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">mmHg (unit)</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Number chol Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Serum Cholestrol 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="chol" checktype="c2" value="" maxlength="18" id="chol"/></span> 
+                              <p id="Number2_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">in mg/dl (unit)</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Dropdown fbs Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Fasting Blood Sugar
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="fbs" checktype="c2" value="" maxlength="18" id="fbs"/></span> 
+                              <p id="Number2_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">1 - blood sugar greater than or equal to 120mg/dl;2- blood sugar less than 120mg/dl</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Number thalach Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Max Heart Rate Achieved
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="thalach" checktype="c2" value="" maxlength="18" id="thalach"/></span> 
+                              <p id="Number3_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">mmHg (unit)</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Dropdown exang Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Exercise induced angina
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="exang" checktype="c2" value="" maxlength="18" id="exang"/></span> 
+                              <p id="Number2_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">1 - yes; 0 - no</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Dropdown slope Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Peak exercise ST segment
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="slope" checktype="c2" value="" maxlength="18" id="slope"/></span> 
+                              <p id="Number2_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">1 = upward slope; 2 = flat;  3 = downward slope</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Number thal Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Thal 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="thal" checktype="c2" value="" maxlength="18" id="thal"/></span> 
+                              <p id="Number7_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">displays the thalassemia</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Number oldpeak Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">ST depression induced by exercise relative to rest 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="oldpeak" checktype="c2" value="" maxlength="18" id="oldpeak"/></span> 
+                              <p id="Number5_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">Integer or Float value</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Dropdown restecg Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Resting ECG
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="restecg" checktype="c2" value="" maxlength="18" id="restecg"/></span> 
+                              <p id="Number5_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">1 = having ST-T wave abnormality;2 = left ventricular hyperthrophy</p>
+                           </div>
+                        </li>
+                        <!---------Dropdown Ends Here---------->
+                        <!---------Number exang Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Max Heart Rate 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="exang" checktype="c2" value="" maxlength="18" id="exang"/></span> 
+                              <p id="Number4_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                        <!---------Number ca Starts Here---------->
+                        <li class="zf-tempFrmWrapper zf-small">
+                           <label class="zf-labelName">Number of major vessels (0-3) colored by flourosopy 
+                           <em class="zf-important">*</em>
+                           </label>
+                           <div class="zf-tempContDiv">
+                              <span> <input type="text" name="ca" checktype="c2" value="" maxlength="18" id="ca"/></span> 
+                              <p id="Number6_error" class="zf-errorMessage" style="display:none;">Invalid value</p>
+                              <p class="zf-instruction">0-3 values</p>
+                           </div>
+                           <div class="zf-clearBoth"></div>
+                        </li>
+                        <!---------Number Ends Here---------->
+                     </ul>
+                  </div>
+                  <!---------template Container Starts Here---------->
+                  <ul>
+                     <li class="zf-fmFooter"><button class="zf-submitColor" type=submit>Submit</button></li>
+                  </dl>
+                  </ul>
+               </div>
+               <!-- 'zf-templateWrapper' ends -->
+            </form>
+         </div>
+         </div>
+         <!-- 'zf-templateWidth' ends -->
+         <script type="text/javascript">var zf_DateRegex = new RegExp("^(([0][1-9])|([1-2][0-9])|([3][0-1]))[-](Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)[-](?:(?:19|20)[0-9]{2})$");
+            var zf_MandArray = [ "Name_First", "Name_Last", "Number", "Dropdown", "Dropdown1", "Number1", "Number2", "Number3", "Dropdown2", "Dropdown3", "Number4", "Dropdown4", "Number5", "Dropdown5", "Number6", "Number7"]; 
+            var zf_FieldArray = [ "Name_First", "Name_Last", "Number", "Dropdown", "Dropdown1", "Number1", "Number2", "Number3", "Dropdown2", "Dropdown3", "Number4", "Dropdown4", "Number5", "Dropdown5", "Number6", "Number7"]; 
+            var isSalesIQIntegrationEnabled = false;
+            var salesIQFieldsArray = [];
+         </script>
+   </div>
+   </div>
+
+   </body>
+</html>
