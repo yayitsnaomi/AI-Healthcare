@@ -11,6 +11,47 @@ https://www.kaggle.com/ronitf/heart-disease-uci
 
 Data consists of 14 key attributes of patient health to predict level of heart disease (an integer valued from 0 (no presence) to 4).
 
+**Steps deploy the app:**
+1. SSH onto EC2 Instance
+2. Create new environment
+ - conda create --name test_env python=3.7
+ - conda activate test_env
+3. Clone the git project into the env:  test_env
+ - git init
+ - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
+4. Go into PUBG-Finish-Placement-Prediction folder
+ - cd AI-Healthcare/
+5. Install requirements.txt file
+ - pip install -r requirements.txt
+6. Change the HOST from "127.0.0.1" to "0.0.0.0" in app_config.py
+ - vi app/app_config.py
+7. Check screen version
+ - screen --version
+8. Start screen named session
+ - screen -S msia423-screen-session
+ - conda activate test_env
+9. Run app
+ - python run.py app
+10. Detach screen session
+ - ctrl+a d
+ 
+ **Steps to run python scripts & parts of analytic pipeline:**
+ This can be done once you are in the EC2 Instance & have created the new environment (steps #1 -#6)
+ 1. Go into SRC to get data from S3 bucket into RDS to feed pipeline
+ - cd src/
+ 2. Run s3_to_RDS and feed in your username (root) and password
+ - python s3_to_RDS.py --user root --password <password>
+ 3. Come back to main folder
+ - cd ..
+ 4. Run load_data, again feed in your username (root) and password
+ - python src/load_data.py--user root --password <password>
+ 5. Run pipeline from generate features -> score model
+ - make all
+ 6. Go into app and run the app to launch 
+ - cd app
+ - python app.py
+
+
 
 ## Project Charter
 
