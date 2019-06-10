@@ -53,12 +53,15 @@ def build_model(s3_bucket, features, size):
         Returns: the model and the test sets for x and y
     """
 
+    features = features.drop('disease_id', 1)
     y = features[['target']]  # final column in target column (binary 1 or 0 for heart disease)
     x = features.drop('target', 1)
 
     # cross validation
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=size, random_state=42)
-
+    print(x_train)
+    print("y_train")
+    print(y_train)
     # extra trees classifier- Build a forest and compute the feature importances
     forest = ExtraTreesClassifier(n_estimators=250,
                                   random_state=0)
