@@ -73,7 +73,7 @@ def add_entry():
 
     session = boto3.session.Session(region_name='eu-west-1')
     s3client = session.client('s3')
-    response = s3client.get_object(Bucket=app.config["S3BUCKET"], Key=app.config["model_path"])
+    response = s3client.get_object(Bucket=app.config["S3BUCKET"], Key="model.pkl")
     body = response['Body'].read()
     model = pickle.loads(body)
 
