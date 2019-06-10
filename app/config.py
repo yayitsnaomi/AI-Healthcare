@@ -15,4 +15,4 @@ HOST = "127.0.0.1"
 MAX_ROWS_SHOW = 15
 S3BUCKET = 'healthcarechatbot'
 S3_MODEL_PATH: 's3://healthcarechatbot/data/model.pkl'
-model_path = 'model.pkl'
+model_path: 'model.pkl'
