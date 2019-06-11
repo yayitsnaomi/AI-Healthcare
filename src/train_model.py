@@ -90,12 +90,12 @@ def plot(forest, x_train, y_train, s3_bucket):
     plt.yticks(range(x_train.shape[1]), x_train.columns)
     plt.ylim([-1, x_train.shape[1]])
 
-    # store image to s3
-    logging.info('stored feature importance from model bar plot')
-    s3 = boto3.client('s3')
-    file_name = 'figures/feature_importance_bar_chart.png'
-    key_name = 'figures/feature_importance_bar_chart.png'
-    s3.upload_file(file_name, s3_bucket, key_name)
+    # # store image to s3
+    # logging.info('stored feature importance from model bar plot')
+    # s3 = boto3.client('s3')
+    # file_name = 'figures/feature_importance_bar_chart.png'
+    # key_name = 'figures/feature_importance_bar_chart.png'
+    # s3.upload_file(file_name, s3_bucket, key_name)
 
 
 def save_model(model, s3_bucket, s3_model, x_test, y_test, x_test_path, y_test_path):
