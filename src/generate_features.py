@@ -9,6 +9,7 @@ import argparse
 import pandas as pd
 import logging
 import boto3
+import sys
 from io import StringIO
 
 # set up logging
@@ -27,13 +28,16 @@ def gets3data(s3_bucket, s3_clean):
     Returns:
         [dataframe] -- [returns the data as a dataframe]
     """
-
-    # import S3_Bucket_name
-    s3 = boto3.client('s3')
-    logging.info('Connecting to S3 bucket for data %s', s3_bucket)
-    obj = s3.get_object(Bucket=s3_bucket, Key=s3_clean)
-    logging.info('Read file from s3 bucket %s', s3_clean)
-    return pd.read_csv(obj['Body'])
+    try:
+        # import S3_Bucket_name
+        s3 = boto3.client('s3')
+        logging.info('Connecting to S3 bucket for data %s', s3_bucket)
+        obj = s3.get_object(Bucket=s3_bucket, Key=s3_clean)
+        logging.info('Read file from s3 bucket %s', s3_clean)
+        return pd.read_csv(obj['Body'])
+    except:
+        logger.warning("Not able to get data from s3")
+        sys.exit(1)
 
 
 def generate_features(data):
@@ -43,19 +47,17 @@ def generate_features(data):
         :param target:  send in the target data
         :param columns: send in the columns of attributes in the data
     """
-    logging.info('Generating features')
-
-
-    # drop variables no needed
-    heart_data = data.drop('oldpeak', axis=1)
-
-    # create dummy variables for categorical variables
-    heart_data_factored = pd.get_dummies(data=heart_data, columns=['restecg', 'cp', 'slope', 'ca', 'thal'])
-
-
-    logging.info('Generated features successfully')
-
-    return heart_data_factored
+    try:
+        logging.info('Generating features')
+        # drop variables no needed
+        heart_data = data.drop('oldpeak', axis=1)
+        # create dummy variables for categorical variables
+        heart_data_factored = pd.get_dummies(data=heart_data, columns=['restecg', 'cp', 'slope', 'ca', 'thal'])
+        logging.info('Generated features successfully')
+        return heart_data_factored
+    except:
+        logger.warning("Not able to generate features & factor dummies")
+        sys.exit(1)
 
 
 def save_data(features, s3_bucket, s3_features):
@@ -66,14 +68,16 @@ def save_data(features, s3_bucket, s3_features):
         s3_bucket {[string]} -- [name of s3 bucket]
         s3_features {[string]} -- [path to features data file]
     """
-    csv_buffer = StringIO()
-    data.to_csv(csv_buffer, index=False)
-    s3_resource = boto3.resource('s3')
-    s3_resource.Object(s3_bucket, s3_features).put(Body=csv_buffer.getvalue())
-
-    #my_bucket.upload_fileobj(data, Key=s3_clean)
-    logging.info('wrote validated feature data to s3 bucket to file %s', s3_features)
-
+    try:
+        csv_buffer = StringIO()
+        data.to_csv(csv_buffer, index=False)
+        s3_resource = boto3.resource('s3')
+        s3_resource.Object(s3_bucket, s3_features).put(Body=csv_buffer.getvalue())
+        #my_bucket.upload_fileobj(data, Key=s3_clean)
+        logging.info('wrote validated feature data to s3 bucket to file %s', s3_features)
+    except:
+        logger.warning("Not able to save feature data to s3")
+        sys.exit(1)
 
 if __name__ == "__main__":
     # get arguments from parser

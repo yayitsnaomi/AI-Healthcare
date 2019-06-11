@@ -45,29 +45,37 @@ def gets3data(s3_bucket, s3_features):
 
 
 def build_model(s3_bucket, features, size):
-    """ function builds the training model on train data
-        :param features: send in model features data
-        :param target:  send in model target data
-        :param size:  send in the size to use for training/testing split (30% default to test)
-        :param model_features:  send in the final features to run the model on
-        Returns: the model and the test sets for x and y
-    """
+    """[function builds the training model on train data]
 
+    Arguments:
+        s3_bucket {[type]} -- [send in path to the s3 bucket]
+        features {[type]} -- [send in model features data]
+        size {[type]} -- [send in the size to use for training/testing split (30% default to test)]
+
+    Returns:
+        extraTreesmodel [model] {[pickle object]} -- [the model pickle object]
+        x_test {[numpy object]} -- [numpy objects for x test sets]
+        y_test {[numpy object]} -- [numpy objects for y test sets]
+    """
+    # drop unique identifier in DB for model training
     features = features.drop('disease_id', 1)
     y = features[['target']]  # final column in target column (binary 1 or 0 for heart disease)
     x = features.drop('target', 1)
 
     # cross validation
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=size, random_state=42)
-    print(x_train)
-    print("y_train")
-    print(y_train)
     # extra trees classifier- Build a forest and compute the feature importances
     forest = ExtraTreesClassifier(n_estimators=250,
                                   random_state=0)
 
     extraTreesModel = forest.fit(x_train, y_train)
     #print("Accuracy on split test: ", forest.score(x_test, y_test))
+
+
+    return extraTreesModel, x_test, y_test
+
+
+def plot(forest, x_train, y_train, s3_bucket):
 
     importances = forest.feature_importances_
     std = np.std([tree.feature_importances_ for tree in forest.estimators_],
@@ -81,7 +89,6 @@ def build_model(s3_bucket, features, size):
              color="pink", align="center")  
     plt.yticks(range(x_train.shape[1]), x_train.columns)
     plt.ylim([-1, x_train.shape[1]])
-    plt.savefig('figures/feature_importance_bar_chart.png')
 
     # store image to s3
     logging.info('stored feature importance from model bar plot')
@@ -89,9 +96,6 @@ def build_model(s3_bucket, features, size):
     file_name = 'figures/feature_importance_bar_chart.png'
     key_name = 'figures/feature_importance_bar_chart.png'
     s3.upload_file(file_name, s3_bucket, key_name)
-
-
-    return extraTreesModel, x_test, y_test
 
 
 def save_model(model, s3_bucket, s3_model, x_test, y_test, x_test_path, y_test_path):
@@ -102,7 +106,6 @@ def save_model(model, s3_bucket, s3_model, x_test, y_test, x_test_path, y_test_p
         :param y_test:  data of y testing target
     """
     logging.info('Saving model')
-    #pickle.dump(model, open('models/model.pkl', 'wb'))
 
     #save model
     s3_resource = boto3.resource('s3')
@@ -142,9 +145,13 @@ if __name__ == "__main__":
     data = gets3data(config["train_model"]["s3_bucket"], config["train_model"]["s3_features"])
 
     # build model & review feature importance
+    logging.info('Training model and generating test / train splits')
     model, x_test, y_test = build_model(config["train_model"]["s3_bucket"], data, config["train_model"]["test_size"])
 
     # save model
     save_model(model, config["train_model"]["s3_bucket"], config["train_model"]["s3_model"], x_test, y_test, config["train_model"]["s3_x_test"], config["train_model"]["s3_y_test"])
-
     logging.info('Saved model output and train test sets')
+
+    # plot feature importance
+    plot(model, x_test, y_test, config["train_model"]["s3_bucket"],)
+    logging.info('Plotting feature importance ')

@@ -1,42 +1,33 @@
+"""
+@author: naomi
+"""
 import os
 import sys
 import logging
 import logging.config
 import pandas as pd
-
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import yaml
-
 import pymysql
 import argparse
-#sys.path.append('..')
 
-#sys.path.append(os.path.abspath(os.path.join('..')))
-#sys.path.insert(0, 'app/')
-#print(sys.path)
-#import config
-#from config import DATABASE_NAME
 
 # add logging 
 logging.basicConfig(filename='heart_doc.log', level=logging.INFO,
                     format='%(name)s - %(levelname)s - %(asctime)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
-#logging.config.fileConfig(config.LOGGING_CONFIG)
-#logger = logging.getLogger(__name__)
-#logger = logging.getLogger('healthcarechatbot')
-
+# declare base
 Base = declarative_base()
 
-
 class Heart(Base):
-    """ Defines the data model for the table `Heart`."""
+    """ Defines the data model for the table `Heart` with columns required to run model pipeline"""
 
     __tablename__ = 'Heart'
 
+    # columns required for features (except ID)
     id = Column(Integer, primary_key=True, unique=True, nullable=False)
     age = Column(Integer, unique=False, nullable=False)
     sex = Column(Integer, unique=False, nullable=False)
@@ -53,7 +44,7 @@ class Heart(Base):
     thal = Column(Integer, unique=False, nullable=False)
     target = Column(Integer, unique=False, nullable=False)
 
-    logger.info("creating data model Heart")
+    logger.info("Defining data model Heart")
 
     def __repr__(self):
         patient_data = "<Heart(id='%s', age='%s',sex='%s' ,cp='%s' ,trestbps='%s' ,chol='%s' ,fbs='%s' ,restecg='%s' ,thalach='%s' ,exang='%s' ,oldpeak='%s' ,slope='%s' ,ca='%s' ,thal='%s' ,target='%s')>"
@@ -61,12 +52,13 @@ class Heart(Base):
 
 
 def _truncate_heart_data(session):
-     """Deletes table"""
+     """Deletes table, called each time this file is run so data is not accidently appended"""
      session.execute('''DELETE FROM Heart''')
+     logger.info("truncating Heart table")
 
 
 def create_db(user,password,database, conn_type, host, port):
-    """Creates a database with the data models inherited from `Base` (Tweet and TweetScore).
+    """Creates a database with the data models inherited from `Base`
 
     Args:
         engine (:py:class:`sqlalchemy.engine.Engine`, default None): SQLAlchemy connection engine.
@@ -77,16 +69,13 @@ def create_db(user,password,database, conn_type, host, port):
     Returns:
         None
     """
+    logger.info("Creating RDS database")
 
-    logger.info("creating RDS")
-
+    # create engine string with details from yaml file
     engine_string = "{}://{}:{}@{}:{}/{}". \
         format(conn_type, user, password, host, port, database)
 
-
     engine = create_engine(engine_string)
-    logger.info("Creating RDS database")
-    #Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     logger.info("Database created with tables")
     return engine
@@ -94,14 +83,11 @@ def create_db(user,password,database, conn_type, host, port):
 
 def create_connection(user,password,dbconfig):
     logger.info("creating RDS connection")
-
     conn = create_engine(engine_string)
-
     return conn
 
 def get_session(engine=None, engine_string=None):
-    """
-
+    """gets session and calls create connection to RDS
     Args:
         engine_string: SQLAlchemy connection string in the form of:
 
@@ -111,69 +97,44 @@ def get_session(engine=None, engine_string=None):
         SQLAlchemy session
     """
 
+    # error checking that engine string was passed into function 
     if engine is None and engine_string is None:
         return ValueError("`engine` or `engine_string` must be provided")
     elif engine is None:
         engine = create_connection(engine_string=engine_string)
-
     Session = sessionmaker(bind=engine)
     session = Session()
-
     return session
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Create defined tables in database")
-    #parser.add_argument("--truncate", "-t", default=False, action="store_true",
-    #                    help="If given, delete current records from tweet_scores table before create_all "
-    #                         "so that table can be recreated without unique id issues ")
     parser.add_argument('--config', default="../config/config.yml", help="config yaml file with parameters")
     parser.add_argument("--user", "-u",help="pass in user name credential for DB ")
     parser.add_argument("--password", "-p",help="pass in password credential for DB")
-    #parser.add_argument("--truncate", "-t",help="truncate table before load")
-
     args = parser.parse_args()
-    logger.info("s3 to RDS")
-
+    logger.info("Loading data from s3 to RDS")
 
     # import yaml config
     with open(args.config, "r") as f:
         config = yaml.load(f)
 
-    # If "truncate" is given as an argument (i.e. python models.py --truncate), then empty the tweet_score table)
-    # if args.truncate:
-    #     session = get_session(engine_string=config.SQLALCHEMY_DATABASE_URI)
-    #     try:
-    #         logger.info("Attempting to truncate heart table.")
-    #         _truncate_heart_data(session)
-    #         session.commit()
-    #         logger.info("Heart table truncated.")
-    #     except Exception as e:
-    #         logger.error("Error occurred while attempting to truncate heart table.")
-    #         logger.error(e)
-    #     finally:
-    #         session.close()
-
 
     # create DB
     engine= create_db(args.user, args.password, config["ingest_data"]["db_name"], config["ingest_data"]["conn_type"], config["ingest_data"]["host"], config["ingest_data"]["port"])
-    print("created db")
+    logger.info("created db")
 
-    s3_data = pd.read_csv("https://healthcarechatbot.s3-us-west-2.amazonaws.com/data/heart.csv")
-
-
+    # connect to s3 with bucket and file path
+    s3_data = pd.read_csv(config["ingest_data"]["s3_path"])
+    # get engine
     session = get_session(engine)
-    
-    print("delete existing table")
+
+    # truncate table
+    logger.info("Truncate existing RDS database table Heart")
     _truncate_heart_data(session)
 
-    print("Insert data")
+    # insert
+    logger.info("Insert data from s3 into RDS database")
     session.bulk_insert_mappings(Heart, s3_data.to_dict(orient="records")) # take from s3 and put into heart
     session.commit()
 
-    # connect to DB and query to check that table was created
-    temp_conn = pymysql.connect(host=config["ingest_data"]["host"], user=args.user, port=config["ingest_data"]["port"], passwd=args.password, db=config["ingest_data"]["db_name"])
-    print("Running Query")
-    temp = pd.read_sql('select count(*) from Heart limit 10;', con=temp_conn)
-    print(temp)
-    #create_db(args.user,args.password,config.DATABASE_NAME)
