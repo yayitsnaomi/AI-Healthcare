@@ -51,10 +51,10 @@ Note: This is used for running locally or on MSIA server - data landed in RDS & 
  - pip install -r requirements.txt
 6. Update AWS Configuration: configure AWS settings with your username and pass credentials
 	aws configure
-	> enter your secret key id
-	> and secret key password
-	> pros enter for default region name
-	> press enter for default output format
+	- enter your secret key id
+	- and secret key password
+	- pros enter for default region name
+	- press enter for default output format
 7. Update config file as required for RDS connection: PORT, HOST
 	- cd ..
 	- cd config
