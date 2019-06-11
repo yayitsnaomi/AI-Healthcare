@@ -12,8 +12,8 @@ https://www.kaggle.com/ronitf/heart-disease-uci
 Data consists of 14 key attributes of patient health to predict level of heart disease.
  
 # Steps to run python scripts & parts of analytic pipeline 
-**Note: This is used for running locally or on MSIA server - data landed in RDS & pipeline output stored to S3 
-1. SSH into MSiA Server**
+**Note: This is used for running locally or on MSIA server - data landed in RDS & pipeline output stored to S3**
+**1. SSH into MSiA Server**
  - ssh nak133@msia423.analytics.northwestern.edu
 **2. Create new environment**
  - conda create --name test_env python=3.7
@@ -44,10 +44,12 @@ Data consists of 14 key attributes of patient health to predict level of heart d
  - cd src/
 **8. Run s3_to_RDS and feed in your username (root) and password to connect to RDS**
  - python s3_to_RDS.py --user root --password <password>
+
 **9. Come back to main folder**
  - cd ..
 **10. Run load_data, again feed in your username (root) and password**
  - python src/load_data.py --user root --password <password>
+
 **11. Run pipeline from generate features -> score model**
  - make all
 **12. Go into app and run the app to launch **
