@@ -35,21 +35,50 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 9. Run app
  - python app.py
  
-# Steps to run python scripts & parts of analytic pipeline (running locally - storing data to s3):
- This can be done once you are in the EC2 Instance & have created the new environment (steps #1 -#6)
- 1. Go into SRC to get data from S3 bucket into RDS to feed pipeline
+# Steps to run python scripts & parts of analytic pipeline 
+Note: This is used for running locally or on MSIA server - data landed in RDS & pipeline output stored to S3 
+1. SSH into MSiA Server
+ - ssh nak133@msia423.analytics.northwestern.edu
+2. Create new environment
+ - conda create --name test_env python=3.7
+ - conda activate test_env
+3. Clone the git project into the env:  test_env
+ - git init
+ - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
+4. Go into AI-Healthcare/ folder
+ - cd AI-Healthcare/
+5. Install requirements.txt file
+ - pip install -r requirements.txt
+6. Update AWS Configuration: configure AWS settings with your username and pass credentials
+	aws configure
+	> enter your secret key id
+	> and secret key password
+	> pros enter for default region name
+	> press enter for default output format
+7. Update config file as required for RDS connection: PORT, HOST
+	- cd ..
+	- cd config
+	- vi config.yml
+	- Edit Ingest_data parameters as required to test RDS connection:
+		- db_Name
+		- conn_type
+		- host
+		- post
+7. Go into SRC folder
+ - cd .. 
  - cd src/
- 2. Run s3_to_RDS and feed in your username (root) and password
+8. Run s3_to_RDS and feed in your username (root) and password to connect to RDS
  - python s3_to_RDS.py --user root --password <password>
- 3. Come back to main folder
+9. Come back to main folder
  - cd ..
- 4. Run load_data, again feed in your username (root) and password
- - python src/load_data.py--user root --password <password>
- 5. Run pipeline from generate features -> score model
+10. Run load_data, again feed in your username (root) and password
+ - python src/load_data.py --user root --password <password>
+11. Run pipeline from generate features -> score model
  - make all
- 6. Go into app and run the app to launch 
+12. Go into app and run the app to launch 
  - cd app
  - python app.py
+13. View app at : http://127.0.0.1:9020/ (unless configured otherwise)
 
 
 
