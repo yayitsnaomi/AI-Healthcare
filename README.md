@@ -10,52 +10,28 @@ Link for app hosted on EC2: http://35.161.103.249:3000
 **AI Cardiologist: Heart Disease Data Source Credit:**
 https://www.kaggle.com/ronitf/heart-disease-uci
 Data consists of 14 key attributes of patient health to predict level of heart disease.
-
-# Steps deploy the app on EC2:
-1. SSH onto EC2 Instance
-2. Create new environment
- - conda create --name test_env python=3.7
- - conda activate test_env
-3. Clone the git project into the env:  test_env
- - git init
- - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
-4. Go into AI-Healthcare/ folder
- - cd AI-Healthcare/
-5. Install requirements.txt file
- - pip install -r requirements.txt
-6. Change the HOST from "127.0.0.1" to "0.0.0.0" of config in app folder, file: config.py. 
-   Also change the PORT from 9020 to 3000. 
-   Save the file.
- - vi app/config.py
-7. Check screen version
- - screen --version
-8. Start screen named session
- - screen -S msia423-screen-session
- - conda activate test_env
-9. Run app
- - python app.py
  
 # Steps to run python scripts & parts of analytic pipeline 
-Note: This is used for running locally or on MSIA server - data landed in RDS & pipeline output stored to S3 
-1. SSH into MSiA Server
+**Note: This is used for running locally or on MSIA server - data landed in RDS & pipeline output stored to S3 
+1. SSH into MSiA Server**
  - ssh nak133@msia423.analytics.northwestern.edu
-2. Create new environment
+**2. Create new environment**
  - conda create --name test_env python=3.7
  - conda activate test_env
-3. Clone the git project into the env:  test_env
+**3. Clone the git project into the env:  test_env**
  - git init
  - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
-4. Go into AI-Healthcare/ folder
+**4. Go into AI-Healthcare/ folder**
  - cd AI-Healthcare/
-5. Install requirements.txt file
+**5. Install requirements.txt file**
  - pip install -r requirements.txt
-6. Update AWS Configuration: configure AWS settings with your username and pass credentials
+**6. Update AWS Configuration: configure AWS settings with your username and pass credentials**
 	aws configure
 	- enter your secret key id
 	- and secret key password
 	- pros enter for default region name
 	- press enter for default output format
-7. Update config file as required for RDS connection: PORT, HOST
+**7. Update config file as required for RDS connection: PORT, HOST**
 	- cd config
 	- vi config.yml
 	- Edit Ingest_data parameters as required to test RDS connection:
@@ -63,22 +39,45 @@ Note: This is used for running locally or on MSIA server - data landed in RDS & 
 		- conn_type
 		- host
 		- post
-7. Go into SRC folder
+**7. Go into SRC folder**
  - cd .. 
  - cd src/
-8. Run s3_to_RDS and feed in your username (root) and password to connect to RDS
+**8. Run s3_to_RDS and feed in your username (root) and password to connect to RDS**
  - python s3_to_RDS.py --user root --password <password>
-9. Come back to main folder
+**9. Come back to main folder**
  - cd ..
-10. Run load_data, again feed in your username (root) and password
+**10. Run load_data, again feed in your username (root) and password**
  - python src/load_data.py --user root --password <password>
-11. Run pipeline from generate features -> score model
+**11. Run pipeline from generate features -> score model**
  - make all
-12. Go into app and run the app to launch 
+**12. Go into app and run the app to launch **
  - cd app
  - python app.py
-13. View app at : http://127.0.0.1:9020/ (unless configured otherwise)
+**13. View app at unless configured otherwise):** http://127.0.0.1:9020/ 
 
+# Steps deploy the app on EC2:
+**1. SSH onto EC2 Instance**
+**2. Create new environment**
+ - conda create --name test_env python=3.7
+ - conda activate test_env
+**3. Clone the git project into the env:  test_env**
+ - git init
+ - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
+**4. Go into AI-Healthcare/ folder**
+ - cd AI-Healthcare/
+**5. Install requirements.txt file**
+ - pip install -r requirements.txt
+**6. Change the HOST from "127.0.0.1" to "0.0.0.0" of config in app folder, file: config.py. 
+   Also change the PORT from 9020 to 3000. 
+   Save the file.**
+ - vi app/config.py
+**7. Check screen version**
+ - screen --version
+**8. Start screen named session**
+ - screen -S msia423-screen-session
+ - conda activate test_env
+**9. Run app**
+ - python app.py
 
 
 ## Project Charter
