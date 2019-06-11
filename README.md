@@ -38,7 +38,7 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 	- pros enter for default region name
 	- press enter for default output format
 
-**7. Update config file as required for RDS connection: PORT, HOST**
+**7. Update config file as required for RDS connection: PORT, HOST. This is also where s3 paths can be updated.**
 	- cd config
 	- vi config.yml
 	- Edit Ingest_data parameters as required to test RDS connection:
@@ -67,7 +67,7 @@ Data consists of 14 key attributes of patient health to predict level of heart d
  - cd app
  - python app.py
 
-**13. View app at unless configured otherwise):** http://127.0.0.1:9020/ 
+**13. View app(unless configured otherwise) at:** http://127.0.0.1:9020/ 
 
 # Steps deploy the app on EC2:
 
