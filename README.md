@@ -10,7 +10,7 @@ https://www.kaggle.com/ronitf/heart-disease-uci
 
 Data consists of 14 key attributes of patient health to predict level of heart disease (an integer valued from 0 (no presence) to 4).
 
-**Steps deploy the app:**
+# Steps deploy the app:**
 1. SSH onto EC2 Instance
 2. Create new environment
  - conda create --name test_env python=3.7
