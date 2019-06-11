@@ -56,21 +56,21 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 
 **Vision**: Provide individuals across the world with access to affordable, quality healthcare. Doctors are limited and AI applications in healthcare are advancing to enable quality care via AIs and internet access.
 
-**Mission**: As individuals are moving towards personalized Healthcare, we can leverage the power of AI chatbots to comfort patients and provide a first pass diagnosis based on symptoms, along with a confidence threshold of the predicted diagnosis. Goal is to enable users to get a diagnosis for their current symptoms. The hopes would be that people get a better diagnosis than what they would from googling symptoms themselves. Users can also chat with Eliza the therapy bot, when they feel like they need someone to listen to them; which has proven to be calming.
-
+**Mission**: As individuals are moving towards personalized Healthcare, we can leverage the power of AI chatbots to comfort patients and provide a first pass diagnosis based on symptoms. ~ 2,300 Americans die of cardiovascular disease each day, average of 1 death every 38 seconds. Direct and indirect costs of total cardiovascular diseases and stroke are estimated to total more than $329.7 billion* includes health expenditures & lost productivity. [Citation: American Heart Association]
+ 
 **Success criteria**:
 
 -   **Machine Learning Performance**:
     -   Misclassification Rate - number of correctly diagnosed based on the patient history.
-    -   Acceptance Criteria: Misclass rate < 0.5, meaning 50% of test data in cross validation is accurately diagnosed. 50% is acceptable in this case because there are so many diseases, with overlapping symptoms, that classificaiton might be challenging to get a very low miscass rate.
+    -   Confusion Matrix - Low false postiives are also important to track for healthcare outcomes.
+    -   Acceptance Criteria: Misclass < 20% i.e. accuracy > 80%. 
 -   **Business Outcome**:
     -   Number of users that use this app instead of googling their symptoms.
-    -   Number of exchanges with the therapy bot, and improved user mood based on pre conversation and post conversation.
     -   Number of stars users rate the app
 
 ## Planning
 
-### Theme 1: Create an AI doctor that can suggest the most likely disease based on your list of symptoms. 
+### Theme 1: Create an AI doctor that can suggest the most likely disease based on your list of symptoms. --> [DROPPED DUE TO LACK OF GOOD DATA]
 
 -   **Epic 1:** Create an analytic that can suggest the most likely diagnosis based on user specified symptoms, along with a confidence interval
 	-   **US0:** Environment setup: install any required packages, libraries. Spin up EC2 on AWS. Create requirements.txt to make reproducible environment. 
@@ -92,17 +92,8 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 -   **Epic 2:** Create an analytic that can suggest the most likely to diagnose heart disease based on patient health factors
     -   **US14:** Environment setup: install any required packages, libraries. Spin up EC2 on AWS. Create requirements.txt to make reproducible environment.
     -   **US15:** Find a good data set for training, including: list of features of heart disease
-    -   **US16:** Build SVM classification model in python
-    -   **US17:** Build UI of cardiologist doctor 
-
-    
-### Theme 3: Integrate an AI therapist. It has been found to be calming and this would be helpful as users might be distressed as they are receiving their diagnoses. 
-
--   **Epic 3:**  Integrate with ELIZA therapy chat-bot with sentiment detection and response via avatars so that there is a comforting AI to listen to users, without judgement. 
-    -   **US1:** Integrate ELIZA Javascript codes: Elizabot.js, elizadata.js, setimood.js 
-    -   **US2:** Integrate ELIZA images for avatar: happy, sad, excited, etc
-    -   **US3:** IntegrateE ELIZA UI scripts into HTML/CSS file to visualize Eliza therapy bot chat next to the symptom diagnoser
-    -   **US4:** UAT test scripts to test ELIZA is properly integrated into the UI and all functionality is working as expected
+    -   **US16:** Build extra trees classifier ensamble classification model in python
+    -   **US17:** Build UI of cardiologist doctor and form to accept inputs
 
 ## Backlog
 
@@ -113,32 +104,12 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 -   4 points ~ 1 day (large)
 -   8 points - big and needs to be broken down more when it comes to execution (okay as placeholder for future work though)
     
-    
-0.  **Theme1.epic1.story0** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
-1.  **Theme1.epic1.story1** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
-2.  **Theme1.epic1.story2** (1pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
-3.  **Theme1.epic1.story3** (2pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
-4.  **Theme1.epic1.story4** (4pts) - PLANNED: sprint 1 - COMPLETED: sprint 1
-5.  **Theme1.epic1.story5** (2pts)
-6.  **Theme1.epic1.story6** (1pts)
-7.  **Theme1.epic1.story7** (4pts)
-8.  **Theme1.epic1.story8** (4pts)
-9.  **Theme1.epic1.story9** (4pts)
-10. **Theme1.epic1.story10** (4pts)
-11. **Theme1.epic1.story11** (4pts)
-12. **Theme1.epic1.story12** (4pts)
-13. **Theme1.epic1.story13**  (2pts)
 
 14. **Theme2.epic1.story1**  (2pts) - COMPLETED: sprint 1
 15. **Theme2.epic1.story2**  (2pts) - COMPLETED: sprint 1
 16. **Theme2.epic1.story3**  (4pts) - COMPLETED: sprint 1
 17. **Theme2.epic1.story4**  (2pts) - COMPLETED: sprint 1
 
-
-14. **Theme3.epic1.story1**  (2pts) - COMPLETED: sprint 1
-16. **Theme3.epic1.story2**  (2pts) - COMPLETED: sprint 1
-17. **Theme3.epic1.story3**  (4pts) - COMPLETED: sprint 1
-18. **Theme3.epic1.story4**  (2pts) - COMPLETED: sprint 1
 
 
 ## Icebox
