@@ -7,10 +7,9 @@ Link for app hosted on EC2: http://35.161.103.249:3000
 
 **AI Cardiologist: Heart Disease Data Source Credit:**
 https://www.kaggle.com/ronitf/heart-disease-uci
+Data consists of 14 key attributes of patient health to predict level of heart disease.
 
-Data consists of 14 key attributes of patient health to predict level of heart disease (an integer valued from 0 (no presence) to 4).
-
-# Steps deploy the app:
+# Steps deploy the app on EC2:
 1. SSH onto EC2 Instance
 2. Create new environment
  - conda create --name test_env python=3.7
@@ -18,23 +17,23 @@ Data consists of 14 key attributes of patient health to predict level of heart d
 3. Clone the git project into the env:  test_env
  - git init
  - git clone https://github.com/yayitsnaomi/AI-Healthcare.git
-4. Go into PUBG-Finish-Placement-Prediction folder
+4. Go into AI-Healthcare/ folder
  - cd AI-Healthcare/
 5. Install requirements.txt file
  - pip install -r requirements.txt
-6. Change the HOST from "127.0.0.1" to "0.0.0.0" in app_config.py
- - vi app/app_config.py
+6. Change the HOST from "127.0.0.1" to "0.0.0.0" of config in app folder, file: config.py. 
+   Also change the PORT from 9020 to 3000. 
+   Save the file.
+ - vi app/config.py
 7. Check screen version
  - screen --version
 8. Start screen named session
  - screen -S msia423-screen-session
  - conda activate test_env
 9. Run app
- - python run.py app
-10. Detach screen session
- - ctrl+a d
+ - python app.py
  
- **Steps to run python scripts & parts of analytic pipeline:**
+# Steps to run python scripts & parts of analytic pipeline (running locally - storing data to s3):
  This can be done once you are in the EC2 Instance & have created the new environment (steps #1 -#6)
  1. Go into SRC to get data from S3 bucket into RDS to feed pipeline
  - cd src/
