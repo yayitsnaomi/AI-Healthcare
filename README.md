@@ -1,5 +1,6 @@
 
-# DIGIAL DOCTOR (Cardiologist): Healthcare at your fingertips
+# Digital Doctor (Cardiologist): 
+Healthcare at your fingertips
 Link for app hosted on EC2: http://35.161.103.249:3000
 
 ![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/img/cardiologist.png)
