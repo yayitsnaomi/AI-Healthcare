@@ -3,6 +3,7 @@ ingest_data:
     conn_type: 'mysql+pymysql'
     host: mysql-nw-nak133.cln3kjoiuwxs.us-west-2.rds.amazonaws.com
     port: 3306
+    s3_path: https://healthcarechatbot.s3-us-west-2.amazonaws.com/data/heart.csv
 load_data:
     db_name: msia423
     conn_type: 'mysql+pymysql'
