@@ -2,8 +2,6 @@
 # Healthcare AI
 Link for app hosted on EC2: http://35.161.103.249:3000
 
-Link for githubIO hosting: https://yayitsnaomi.github.io/AI-Healthcare/
-
 ![alt text](https://github.com/yayitsnaomi/Chatbot-AI-Healthcare/blob/master/img/cardiologist.png)
 
 
